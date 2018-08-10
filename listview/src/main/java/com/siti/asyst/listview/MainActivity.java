@@ -11,6 +11,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.siti.asyst.listview.Fragment.InputBottomSheet;
+import com.siti.asyst.listview.adapter.PersonAdapter;
+import com.siti.asyst.listview.model.Person;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     ArrayList<String> listNama = new ArrayList<String>();
     ArrayAdapter arrayAdapter;
+
+    ArrayList<Person> listPerson = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +41,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listNama.add("Lala");
         listNama.add("Lili");
 
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listNama);
 
-        listView.setAdapter(arrayAdapter);
+        for (int i = 0; i < 10; i++) {
+            Person person = new Person("Nama Ke " + i, "Alamat Ke " + i);
+            listPerson.add(person);
+        }
+
+        PersonAdapter personAdapter = new PersonAdapter(this, listPerson);
+
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listNama);
+
+        listView.setAdapter(personAdapter);
 
         //listenernya listview
         //listView.setOnItemClickListener(this);
-        addButton.setOnClickListener(this);
-        listView.setOnItemLongClickListener(this);
+        //addButton.setOnClickListener(this);
+        //listView.setOnItemLongClickListener(this);
     }
 
     @Override
@@ -81,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onSubmitButton(String name, int position) {
         listNama.set(position, name);
-        arrayAdapter.notifyDataSetChanged();
+        arrayAdapter.notifyDataSetChanged(); //ngasihtau adapter bila ada perubahn
     }
 
 }
